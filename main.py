@@ -1,15 +1,10 @@
 
-c= open('curriculum.txt', mode='rb')  # 打开文件
+
 import os
-def move(x):
-    c.seek(x,os.SEEK_CUR)  # 移动指针
-def setext():
-    pass
-move(78)
-i=1
-j=1
 from tkinter import *
 import re
+
+
 
 class Lesson:
     list1 = []  # 存放所有课程信息
@@ -72,8 +67,14 @@ lesson1=Lesson()
 
 top = Tk()  # 创建一个窗体
 top.geometry("1100x400+200+50")  # 改变窗体的大小
+def move(x):
+    c.seek(x,os.SEEK_CUR)  # 移动指针
 
 # 读取与显示
+c= open('curriculum.txt', mode='rb')  # 打开文件
+move(78)
+i=1
+j=1
 def fuc():
     i=1
     while (i<6):
@@ -108,39 +109,13 @@ entry.pack()
 # 搜索按钮
 def insert_point():
     var = entry.get()  # 获取输入内容
-
-    if re.match('星期一',var):
-        var=re.sub('星期一','星期1',var)
-    elif re.match('星期二',var):
-        var = re.sub('星期二', '星期2', var)
-    elif re.match('星期三',var):
-        var=re.sub('星期三','星期3',var)
-    elif re.match('星期四',var):
-        var=re.sub('星期四','星期4',var)
-    elif re.match('星期五',var):
-        var=re.sub('星期五','星期5',var)
-    elif re.match('第一节',var):
-        var=re.sub('第一节','第1节',var)
-    elif re.match('第二节',var):
-        var = re.sub('第二节', '第2节', var)
-    elif re.match('第三节',var):
-        var=re.sub('第三节','第3节',var)
-    elif re.match('第四节',var):
-        var=re.sub('第四节','第4节',var)
-    elif re.match('第五节',var):
-        var=re.sub('第五节','第5节',var)
-    elif re.match('第六节',var):
-        var=re.sub('第六节','第6节',var)
-    elif re.match('第七节',var):
-        var=re.sub('第七节','第7节',var)
-    elif re.match('第八节',var):
-        var=re.sub('第八节','第8节',var)
-    elif re.match('第九节',var):
-        var=re.sub('第九节','第9节',var)
-    elif re.match('第十节',var):
-        var=re.sub('第十节','第10节',var)
-    elif re.match('第十一节',var):
-        var=re.sub('第十一节','第11节',var)
+    alist=['星期一','星期二','星期三','星期四','星期五','第一节','第二节','第三节','第四节','第五节','第六节','第七节','第八节','第九节','第十节','第十一节']
+    blist=['星期1','星期2','星期3','星期4','星期5','第1节','第2节','第3节','第4节','第5节','第6节','第7节','第8节','第9节','第10节','第11节']
+    i=0
+    while(i<16):
+        if re.match(alist[i],var):
+            var=re.sub(alist[i],blist[i],var)
+        i+=1
     lesson1.judge(var)  # 测试
 b1 = Button(top,text="搜索",width=15,height=2,command=insert_point)  # 按钮，绑定事件insert_input
 b1.pack()
