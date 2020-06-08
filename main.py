@@ -113,34 +113,34 @@ def insert_point():
         var=re.sub('星期一','星期1',var)
     elif re.match('星期二',var):
         var = re.sub('星期二', '星期2', var)
-    elif var=='星期三':
-        var='星期3'
-    elif var=='星期四':
-        var='星期4'
-    elif var=='星期五':
-        var='星期5'
-    elif var=='第一节':
-        var='第1节'
-    elif var=='第二节':
-        var='第2节'
-    elif var=='第三节':
-        var='第3节'
-    elif var=='第四节':
-        var='第4节'
-    elif var=='第五节':
-        var='第5节'
-    elif var=='第六节':
-        var='第6节'
-    elif var=='第七节':
-        var='第7节'
-    elif var=='第八节':
-        var='第8节'
-    elif var=='第九节':
-        var='第9节'
-    elif var=='第十节':
-        var='第10节'
-    elif var=='第十一节':
-        var='第11节'
+    elif re.match('星期三',var):
+        var=re.sub('星期三','星期3',var)
+    elif re.match('星期四',var):
+        var=re.sub('星期四','星期4',var)
+    elif re.match('星期五',var):
+        var=re.sub('星期五','星期5',var)
+    elif re.match('第一节',var):
+        var=re.sub('第一节','第1节',var)
+    elif re.match('第二节',var):
+        var = re.sub('第二节', '第2节', var)
+    elif re.match('第三节',var):
+        var=re.sub('第三节','第3节',var)
+    elif re.match('第四节',var):
+        var=re.sub('第四节','第4节',var)
+    elif re.match('第五节',var):
+        var=re.sub('第五节','第5节',var)
+    elif re.match('第六节',var):
+        var=re.sub('第六节','第6节',var)
+    elif re.match('第七节',var):
+        var=re.sub('第七节','第7节',var)
+    elif re.match('第八节',var):
+        var=re.sub('第八节','第8节',var)
+    elif re.match('第九节',var):
+        var=re.sub('第九节','第9节',var)
+    elif re.match('第十节',var):
+        var=re.sub('第十节','第10节',var)
+    elif re.match('第十一节',var):
+        var=re.sub('第十一节','第11节',var)
     lesson1.judge(var)  # 测试
 b1 = Button(top,text="搜索",width=15,height=2,command=insert_point)  # 按钮，绑定事件insert_input
 b1.pack()
