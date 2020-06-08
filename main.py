@@ -110,9 +110,9 @@ def insert_point():
     var = entry.get()  # 获取输入内容
 
     if re.match('星期一',var):
-        re.sub('星期一','星期1',var)
+        var=re.sub('星期一','星期1',var)
     elif re.match('星期二',var):
-        var.replace('星期一','星期1')
+        var = re.sub('星期二', '星期2', var)
     elif var=='星期三':
         var='星期3'
     elif var=='星期四':
