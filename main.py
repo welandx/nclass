@@ -10,6 +10,7 @@ class Lesson:
     list1 = []  # 存放所有课程信息
     asw=[]
     answer=[]
+    time=['8:00-8:50','9:00-9:50','10:00-10:50','11:00-11:50','13:50-14:40','14:50-15:40','15:50-16:40','16:50-17:40','18:30-19:20','19:30-20:20','20:30-21:20']
     # 测试函数
     def judge(self,var):
         # 搜索
@@ -42,7 +43,7 @@ class Lesson:
         from tkinter import messagebox
         src=''
         for x in self.answer:
-            src =src+ '星期%d 第%s节 %s \n' % (x['doweek'], x['secnum'], x['name'])
+            src =src+ '星期%d 第%s节 %s %s\n' % (x['doweek'], x['secnum'], x['name'],x['time'])
         ms=messagebox.showinfo(title='搜索结果',message=src)
         print(ms)
         var=''
@@ -81,26 +82,16 @@ def fuc():
     while (i<6):
         b = c.read(6)
         a = b.decode('utf-8')
-        locals()['lesson'+str(i)+str(j)]= {'doweek': i, 'name': a, 'secnum': j}
+        locals()['lesson'+str(i)+str(j)]= {'doweek': i, 'name': a, 'secnum': j,'time':lesson1.time[j-1]}
         lesson1.list1.append(locals()['lesson'+str(i)+str(j)])  # 存入list1
         move(5)  # 指针移动
         scr = locals()['lesson'+str(i)+str(j)]['name']
 
         # 确认文本的位置
-        x = locals()['lesson'+str(i)+str(j)]['doweek']
-        y = locals()['lesson'+str(i)+str(j)]['secnum']
-        text = Text(top, width=30, height=5)  # 创建一个文本控件
-        text.place(x=x * 215 + 80, y=locals()['lesson'+str(i)+str(j)]['secnum'] * 70 + 30)  # 在屏幕上放置文本控件
-        text.insert(INSERT, scr)  # 在控件上放置文本
+        Label(f1, text=scr,bg='lightblue',font='48').grid(row=j, column=i, padx=0, pady=0, ipadx=100, ipady=20)
 
         i=i+1
-while(j<11):
-    fuc()
-    j=j+1
-    move(7)  # 指针移动
-j=11
-move(3)  # 指针移动
-fuc()
+
 
 
 # 放置输入框
@@ -108,7 +99,7 @@ entry=Entry(top,bd=4)
 entry.pack(side='top',anchor='ne')
 
 # 搜索按钮
-def insert_point():
+def insert_point1():
     var = entry.get()  # 获取输入内容
     alist=['星期一','星期二','星期三','星期四','星期五','第一节','第二节','第三节','第四节','第五节','第六节','第七节','第八节','第九节','第十节','第十一节']
     blist=['星期1','星期2','星期3','星期4','星期5','第1节','第2节','第3节','第4节','第5节','第6节','第7节','第8节','第9节','第10节','第11节']
@@ -118,20 +109,50 @@ def insert_point():
             var=re.sub(alist[i],blist[i],var)
         i+=1
     lesson1.judge(var)  # 测试
-b1 = Button(top,text="搜索",width=15,height=2,command=insert_point)  # 按钮，绑定事件insert_input
+def insert_point2():
+    var = entry.get()  # 获取输入内容
+    alist=['第一节','第二节','第三节','第四节','第五节','第六节','第七节','第八节','第九节','第十节','第十一节']
+    i = 0
+    while (i < 11):
+        if re.match(alist[i], var):
+            from tkinter import messagebox
+            ms = messagebox.showinfo(title='搜索结果', message=lesson1.time[i])
+            print(ms)
+        i += 1
+b1 = Button(top,text="搜索",width=15,height=2,command=insert_point1)  # 按钮，绑定事件insert_input
 b1.pack(side='top',anchor='ne')
+b2 = Button(top,text="搜索时间",width=15,height=2,command=insert_point2)  # 按钮，绑定事件insert_input
+b2.pack(side='top',anchor='ne')
+f2=Frame(top)
+f2.pack()
+f4=Frame(f2)
+f4.pack(side='top',anchor='ne')
+f3 = Frame(f2)
+f3.pack(side='left',fill='y')
+f1=Frame(f2)
+f1.pack(side='right',expand='yes', fill='both')
 
 # 放置表格
 i=1
+Label(f4, text='                            ',bg='lightgreen',).grid(row=1, column=1, padx=0, pady=0, ipadx=48, ipady=20)
 while(i<6):
-    text = Text(top, width=30, height=1)
-    text.place(x=295+(i-1)*215,y=80)
-    text.insert(INSERT,'星期%s' % i)
+    Label(f4, text='星期%s' % i,bg='lightgreen',font='48').grid(row=1, column=i+1, padx=0, pady=0, ipadx=95, ipady=20)
     i+=1
+
+
+while(j<11):
+    fuc()
+    j=j+1
+    move(7)  # 指针移动
+j=11
+move(3)  # 指针移动
+fuc()
 i=1
+while(i<10):
+    Label(f3, text='第%s节' % i,bg='lightyellow',font='48').grid(row=i, column=1, padx=0, pady=0, ipadx=80, ipady=20)
+    i += 1
+i=9
 while(i<12):
-    text = Text(top, width=10, height=5)
-    text.place(x=220, y=100+(i-1)*70)
-    text.insert(INSERT, '第%s节' % i)
+    Label(f3, text='第%s节' % i,bg='lightyellow',font='48').grid(row=i, column=1, padx=0, pady=0, ipadx=76, ipady=20)
     i += 1
 top.mainloop()  # 进入消息循环
