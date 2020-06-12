@@ -66,6 +66,7 @@ lesson1=Lesson()
 
 
 top = Tk()  # 创建一个窗体
+top.title('1班2019-2020第二学期课程表')
 top.geometry("1100x400+200+50")  # 改变窗体的大小
 def move(x):
     c.seek(x,os.SEEK_CUR)  # 移动指针
@@ -104,7 +105,7 @@ fuc()
 
 # 放置输入框
 entry=Entry(top,bd=4)
-entry.pack()
+entry.pack(side='top',anchor='ne')
 
 # 搜索按钮
 def insert_point():
@@ -118,14 +119,14 @@ def insert_point():
         i+=1
     lesson1.judge(var)  # 测试
 b1 = Button(top,text="搜索",width=15,height=2,command=insert_point)  # 按钮，绑定事件insert_input
-b1.pack()
+b1.pack(side='top',anchor='ne')
 
 # 放置表格
 i=1
 while(i<6):
     text = Text(top, width=30, height=1)
     text.place(x=295+(i-1)*215,y=80)
-    text.insert(INSERT,'星期%s' %i)
+    text.insert(INSERT,'星期%s' % i)
     i+=1
 i=1
 while(i<12):
