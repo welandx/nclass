@@ -3,8 +3,21 @@
 import os
 from tkinter import *
 import re
+def move(x):
+    c.seek(x,os.SEEK_CUR)  # 移动指针
+def fuc():
+    i=1
+    while (i<6):
+        b = c.read(6)
+        a = b.decode('utf-8')
+        locals()['lesson'+str(i)+str(j)]= {'doweek': i, 'name': a, 'secnum': j,'time':lesson1.time[j-1]}
+        lesson1.list1.append(locals()['lesson'+str(i)+str(j)])  # 存入list1
+        move(5)  # 指针移动
+        scr = locals()['lesson'+str(i)+str(j)]['name']
 
-
+        # 确认文本的位置
+        Label(f1, text=scr,bg='lightblue',font='48').grid(row=j, column=i, padx=0, pady=0, ipadx=100, ipady=20)
+        i=i+1
 
 class Lesson:
     list1 = []  # 存放所有课程信息
@@ -65,40 +78,7 @@ class Lesson:
                     self.asw.append(x)
 lesson1=Lesson()
 
-
-top = Tk()  # 创建一个窗体
-top.title('1班2019-2020第二学期课程表')
-top.geometry("1100x400+200+50")  # 改变窗体的大小
-def move(x):
-    c.seek(x,os.SEEK_CUR)  # 移动指针
-
-# 读取与显示
-c= open('curriculum.txt', mode='rb')  # 打开文件
-move(78)
-i=1
-j=1
-def fuc():
-    i=1
-    while (i<6):
-        b = c.read(6)
-        a = b.decode('utf-8')
-        locals()['lesson'+str(i)+str(j)]= {'doweek': i, 'name': a, 'secnum': j,'time':lesson1.time[j-1]}
-        lesson1.list1.append(locals()['lesson'+str(i)+str(j)])  # 存入list1
-        move(5)  # 指针移动
-        scr = locals()['lesson'+str(i)+str(j)]['name']
-
-        # 确认文本的位置
-        Label(f1, text=scr,bg='lightblue',font='48').grid(row=j, column=i, padx=0, pady=0, ipadx=100, ipady=20)
-
-        i=i+1
-
-
-
-# 放置输入框
-entry=Entry(top,bd=4)
-entry.pack(side='top',anchor='ne')
-
-# 搜索按钮
+# 搜索按钮事件
 def insert_point1():
     var = entry.get()  # 获取输入内容
     alist=['星期一','星期二','星期三','星期四','星期五','第一节','第二节','第三节','第四节','第五节','第六节','第七节','第八节','第九节','第十节','第十一节']
@@ -119,10 +99,31 @@ def insert_point2():
             ms = messagebox.showinfo(title='搜索结果', message=lesson1.time[i])
             print(ms)
         i += 1
-b1 = Button(top,text="搜索",width=15,height=2,command=insert_point1)  # 按钮，绑定事件insert_input
-b1.pack(side='top',anchor='ne')
-b2 = Button(top,text="搜索时间",width=15,height=2,command=insert_point2)  # 按钮，绑定事件insert_input
-b2.pack(side='top',anchor='ne')
+
+
+# 基本布局
+
+top = Tk()  # 创建一个窗体
+top.title('1班2019-2020第二学期课程表')
+top.geometry("1100x400+200+50")  # 改变窗体的大小
+frame1=Frame(top)
+frame1.pack()
+frame2=Frame(frame1)
+frame2.pack(side='right',anchor='ne')
+frame3=Frame(frame1)
+frame3.pack(side='left')
+# 标题
+import tkinter.font as tkFont
+ft1 = tkFont.Font(family='Fixdsys', size=30, weight=tkFont.BOLD)
+Label(frame3,text='1班2019-2020第二学期课程表',font=ft1).grid(padx=0, pady=0, ipadx=405, ipady=20)
+# 放置输入框
+entry=Entry(frame1,bd=4)
+entry.pack(side='top',anchor='ne')
+# 放置按钮和frame
+b1 = Button(frame1,text="搜索",width=15,height=2,command=insert_point1,bg='lightblue')  # 按钮，绑定事件insert_input1
+b1.pack(side='top')
+b2 = Button(frame1,text="搜索时间",width=15,height=2,command=insert_point2,bg='lightblue')  # 按钮，绑定事件insert_input2
+b2.pack(side='top')
 f2=Frame(top)
 f2.pack()
 f4=Frame(f2)
@@ -132,14 +133,12 @@ f3.pack(side='left',fill='y')
 f1=Frame(f2)
 f1.pack(side='right',expand='yes', fill='both')
 
-# 放置表格
+
+# 读取与显示
+c= open('curriculum.txt', mode='rb')  # 打开文件
+move(78)
 i=1
-Label(f4, text='                            ',bg='lightgreen',).grid(row=1, column=1, padx=0, pady=0, ipadx=48, ipady=20)
-while(i<6):
-    Label(f4, text='星期%s' % i,bg='lightgreen',font='48').grid(row=1, column=i+1, padx=0, pady=0, ipadx=95, ipady=20)
-    i+=1
-
-
+j=1
 while(j<11):
     fuc()
     j=j+1
@@ -147,6 +146,13 @@ while(j<11):
 j=11
 move(3)  # 指针移动
 fuc()
+
+# 放置表格
+i=1
+Label(f4, text='                            ',bg='lightgreen',).grid(row=1, column=1, padx=0, pady=0, ipadx=48, ipady=20)
+while(i<6):
+    Label(f4, text='星期%s' % i,bg='lightgreen',font='48').grid(row=1, column=i+1, padx=0, pady=0, ipadx=95, ipady=20)
+    i+=1
 i=1
 while(i<10):
     Label(f3, text='第%s节' % i,bg='lightyellow',font='48').grid(row=i, column=1, padx=0, pady=0, ipadx=80, ipady=20)
